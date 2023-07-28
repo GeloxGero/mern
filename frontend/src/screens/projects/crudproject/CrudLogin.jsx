@@ -55,10 +55,16 @@ export default function CrudLogin() {
 			>
 				{(props) => (
 					<Form>
-						<Field type="text" name="email" value={props.values.email} />
+						<Field
+							type="text"
+							name="email"
+							placeholder="Email"
+							value={props.values.email}
+						/>
 						<Field
 							type="password"
 							name="password"
+							placeholder="Password"
 							value={props.values.password}
 						/>
 

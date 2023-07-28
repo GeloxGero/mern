@@ -90,20 +90,6 @@ const CrudAdmin = () => {
 							>
 								Logout
 							</button>
-							<button
-								onClick={() => {
-									navigate("/projects/crud/login");
-								}}
-							>
-								Login
-							</button>
-							<button
-								onClick={() => {
-									navigate("/projects/crud/register");
-								}}
-							>
-								Register
-							</button>
 						</div>
 					</div>
 				</div>

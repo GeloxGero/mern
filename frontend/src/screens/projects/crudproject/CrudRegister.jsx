@@ -61,16 +61,28 @@ export default function CrudRegister() {
 			>
 				{(props) => (
 					<Form>
-						<Field type="email" name="email" value={props.values.email} />
-						<Field type="text" name="name" value={props.values.name} />
+						<Field
+							type="email"
+							name="email"
+							placeholder="Email"
+							value={props.values.email}
+						/>
+						<Field
+							type="text"
+							name="name"
+							placeholder="Username"
+							value={props.values.name}
+						/>
 						<Field
 							type="password"
 							name="password"
+							placeholder="Password"
 							value={props.values.password}
 						/>
 						<Field
 							type="password"
 							name="confirmpassword"
+							placeholder="Confirm Password"
 							value={props.values.confirmpassword}
 						/>
 

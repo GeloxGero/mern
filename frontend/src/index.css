@@ -99,6 +99,23 @@ body {
 	font-size: 1em;
 }
 
+nav {
+	display: flex;
+	align-items: center;
+	justify-content: end;
+	height: 400px;
+	width: 100vw;
+}
+
+nav .navigate {
+	padding-top: 80px;
+	padding-right: 40px;
+	color: white;
+	font-size: 1.2rem;
+
+	text-decoration: none;
+}
+
 .items-container {
 	display: flex;
 	align-items: top;
