@@ -34,6 +34,10 @@ import CrudUpdate from "./screens/projects/crudproject/CrudUpdate.jsx";
 import CrudNewItem from "./screens/projects/crudproject/CrudNewItem.jsx";
 import CrudNewCategory from "./screens/projects/crudproject/CrudNewCategory.jsx";
 import CrudDeleteCategory from "./screens/projects/crudproject/CrudDeleteCategory.jsx";
+import CrudPublic from "./screens/projects/crudproject/CrudPublic.jsx";
+import CrudAdmin from "./screens/projects/crudproject/CrudAdmin.jsx";
+import CrudLogin from "./screens/projects/crudproject/CrudLogin.jsx";
+import CrudRegister from "./screens/projects/crudproject/CrudRegister.jsx";
 
 const router = createBrowserRouter(
 	createRoutesFromElements(
@@ -52,12 +56,17 @@ const router = createBrowserRouter(
 					<Route path="drafts" element={<DrawerDrafts />} />
 					<Route path="allmail" element={<DrawerAllMail />} />
 				</Route>
+
 				<Route path="crud" element={<CrudLayout />}>
-					<Route index element={<CrudProject />}></Route>
+					<Route index element={<CrudPublic />} />
+
+					<Route path="admin" element={<CrudAdmin />} />
 					<Route path="update" element={<CrudUpdate />} />
 					<Route path="add" element={<CrudNewItem />} />
 					<Route path="addcategory" element={<CrudNewCategory />} />
 					<Route path="deletecategory" element={<CrudDeleteCategory />} />
+					<Route path="login" element={<CrudLogin />} />
+					<Route path="register" element={<CrudRegister />} />
 				</Route>
 			</Route>
 		</Route>
