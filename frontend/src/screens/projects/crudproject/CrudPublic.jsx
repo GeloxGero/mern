@@ -28,7 +28,6 @@ const Navbar = styled.nav`
 `;
 
 const CrudPublic = () => {
-	const [filter, setFilter] = useState("item");
 	const navigate = useNavigate();
 
 	const userData = useSelector((state) => state.auth);
@@ -43,16 +42,12 @@ const CrudPublic = () => {
 		data: categories,
 		isLoading: categoriesLoading,
 		isSuccess: categoriesSuccess,
-		isError: categoriesIsError,
-		error: categoriesError,
 	} = useGetCrudCategoriesQuery();
 
 	const {
 		data: items,
 		isLoading: itemsLoading,
 		isSuccess: itemsSuccess,
-		isError: itemsIsError,
-		error: itemsError,
 	} = useGetCrudItemsQuery();
 
 	let content;
