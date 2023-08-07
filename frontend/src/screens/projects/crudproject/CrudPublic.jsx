@@ -20,13 +20,15 @@ const PublicPage = styled.div`
 
 const Navbar = styled.nav`
 	display: flex;
-	align-items: start;
+	align-items: end;
 	justify-content: end;
 	height: 250px;
 	max-width: 1350px;
 	margin: 0 auto;
+	padding-bottom: 8px;
 
 	.navigate {
+		font-size: 2em;
 		text-decoration: none;
 		color: #acb212;
 		padding-left: 20px;

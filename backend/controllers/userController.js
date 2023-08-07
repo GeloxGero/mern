@@ -16,6 +16,7 @@ const authUser = asyncHandler(async (req, res) => {
 			_id: user._id,
 			name: user.name,
 			email: user.email,
+			type: user.type,
 		});
 	} else {
 		res.status(400);
@@ -25,7 +26,7 @@ const authUser = asyncHandler(async (req, res) => {
 
 const registerUser = asyncHandler(async (req, res) => {
 	const { name, email, password } = req.body;
-
+	const type = "User";
 	const userExists = await User.findOne({ email });
 
 	if (userExists) {
@@ -37,6 +38,7 @@ const registerUser = asyncHandler(async (req, res) => {
 		name,
 		email,
 		password,
+		type,
 	});
 
 	if (user) {
@@ -45,6 +47,7 @@ const registerUser = asyncHandler(async (req, res) => {
 			_id: user._id,
 			name: user.name,
 			email: user.email,
+			type: type,
 		});
 	} else {
 		res.status(400);

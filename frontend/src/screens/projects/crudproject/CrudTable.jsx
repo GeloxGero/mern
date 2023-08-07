@@ -1,8 +1,11 @@
 import styled from "styled-components";
+import { useState } from "react";
+import CrudTableModal from "./CrudTableModal";
 
 const TableContainer = styled.div`
 	padding: 0;
 	margin: 0;
+	border-radius: 10px;
 
 	width: 800px;
 	display: flex;
@@ -11,8 +14,6 @@ const TableContainer = styled.div`
 `;
 
 const TableAttachment = styled.div`
-	border-radius: 100px;
-
 	div {
 		display: flex;
 		align-items: center;
@@ -33,13 +34,15 @@ const TableAttachment = styled.div`
 
 const Table = styled.table`
 	width: 100%;
-	border-collapse: collapse;
+	border-spacing: 0;
 
 	th,
 	td {
 		height: 40px;
 		padding: 8px;
 		text-align: left;
+
+		border: none;
 	}
 
 	th {
@@ -51,12 +54,16 @@ const Table = styled.table`
 		color: #3f4259;
 	}
 
-	tr:hover {
+	td:hover {
 		cursor: pointer;
 	}
 
-	tr:active {
-		background-color: #000;
+	tr:hover {
+		border-bottom: solid 1px blue;
+	}
+
+	tr:hover td {
+		background: #00341623;
 	}
 
 	tr:nth-child(even) {
@@ -69,6 +76,15 @@ const Table = styled.table`
 `;
 
 const CrudTable = ({ data }) => {
+	const [openModal, setOpenModal] = useState(null);
+
+	//modal functions
+	const handleOpenModal = (index) => setOpenModal(index);
+	const handleCloseModal = (index) => {
+		console.log(openModal, "Running");
+		setOpenModal(index + 1);
+	};
+
 	return (
 		<TableContainer>
 			<TableAttachment>
@@ -89,13 +105,20 @@ const CrudTable = ({ data }) => {
 				<tbody>
 					{data.map((item, index) => {
 						return (
-							<tr key={index}>
+							<tr key={index} onClick={() => handleOpenModal(index)}>
 								<td>{item.quantity}</td>
 								<td>{item.price}</td>
 								<td>{item.category.name}</td>
+								<CrudTableModal
+									isOpen={openModal === index}
+									onClose={handleCloseModal}
+									data={item}
+								/>
 							</tr>
 						);
 					})}
+
+					{console.log(openModal)}
 				</tbody>
 			</Table>
 		</TableContainer>

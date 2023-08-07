@@ -2,11 +2,11 @@ import styled from "styled-components";
 import images from "../../../assets/image-links";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
 
 const ProductContainer = styled.div`
 	max-width: 1350px;
 	min-height: 500px;
+	border-radius: 10px;
 
 	display: flex;
 	justify-content: center;
@@ -14,12 +14,15 @@ const ProductContainer = styled.div`
 
 	flex-wrap: wrap;
 	background-color: #79829a;
+
+	margin-bottom: 50px;
 `;
 
 const ProductCard = styled.div`
 	height: 300px;
 	width: 200px;
 	margin: 20px;
+	border-radius: 10px;
 
 	position: relative;
 
