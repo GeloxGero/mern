@@ -2,13 +2,13 @@ import { useGetCrudItemsQuery } from "../../../slices/projectSlices/crudItemSlic
 import { useGetCrudCategoriesQuery } from "../../../slices/projectSlices/crudCategorySlice";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import CrudTable from "./CrudTable";
+import CrudProductCards from "./CrudProductCards";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 
 const PublicPage = styled.div`
-	height: 100vh;
 	width: 100vw;
+	min-height: 100vh;
 
 	background-color: #3f4259;
 
@@ -22,9 +22,15 @@ const Navbar = styled.nav`
 	display: flex;
 	align-items: start;
 	justify-content: end;
-	height: 100px;
+	height: 250px;
 	max-width: 1350px;
 	margin: 0 auto;
+
+	.navigate {
+		text-decoration: none;
+		color: #acb212;
+		padding-left: 20px;
+	}
 `;
 
 const CrudPublic = () => {
@@ -74,7 +80,7 @@ const CrudPublic = () => {
 						Register
 					</Link>
 				</Navbar>
-				<CrudTable data={newItems} />
+				<CrudProductCards data={newItems} />
 			</PublicPage>
 		);
 	}

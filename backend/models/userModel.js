@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
+import CrudItem from "./projectModels/crudModels/crudModel.js";
 
 const userSchema = mongoose.Schema(
 	{
@@ -16,6 +17,8 @@ const userSchema = mongoose.Schema(
 			required: true,
 			unique: true,
 		},
+		type: { type: String, required: true, default: "User" },
+		favorites: { type: [mongoose.Schema.Types.ObjectId], ref: "CrudItem" },
 	},
 	{
 		timestamps: true,
