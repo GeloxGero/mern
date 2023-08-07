@@ -1,13 +1,31 @@
-import {
-	useGetCrudItemsQuery,
-	useDeleteCrudItemMutation,
-} from "../../../slices/projectSlices/crudItemSlice";
+import { useGetCrudItemsQuery } from "../../../slices/projectSlices/crudItemSlice";
 import { useGetCrudCategoriesQuery } from "../../../slices/projectSlices/crudCategorySlice";
 import { useNavigate, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faRightFromBracket, faUser } from "@fortawesome/free-solid-svg-icons";
+import CrudTable from "./CrudTable";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
+
+const PublicPage = styled.div`
+	height: 100vh;
+	width: 100vw;
+
+	background-color: #3f4259;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+`;
+
+const Navbar = styled.nav`
+	display: flex;
+	align-items: start;
+	justify-content: end;
+	height: 100px;
+	max-width: 1350px;
+	margin: 0 auto;
+`;
 
 const CrudPublic = () => {
 	const [filter, setFilter] = useState("item");
@@ -20,9 +38,6 @@ const CrudPublic = () => {
 			navigate("/projects/crud/admin");
 		}
 	}, [navigate, userData]);
-
-	const [deleteCrudItem, { isLoading, isError, isSuccess }] =
-		useDeleteCrudItemMutation();
 
 	const {
 		data: categories,
@@ -45,47 +60,27 @@ const CrudPublic = () => {
 	if (itemsLoading || categoriesLoading) content = <h1>Loading...</h1>;
 
 	if (itemsSuccess && categoriesSuccess) {
+		//get specific category from the category id stored in item
+		//replace category id with category object
+		const newItems = items.map((item) => ({
+			...item,
+			category: categories.find((category) => {
+				return item.category === category._id;
+			}),
+		}));
+
 		content = (
-			<>
-				<nav>
+			<PublicPage>
+				<Navbar>
 					<Link className="navigate" to="login">
 						Login
 					</Link>
 					<Link className="navigate" to="register">
 						Register
 					</Link>
-				</nav>
-				<div className="items-container flex">
-					<table>
-						<thead>
-							<tr className="item-table">
-								<th>Name</th>
-								<th>Quantity</th>
-								<th>Price</th>
-								<th>Category</th>
-							</tr>
-						</thead>
-						<tbody>
-							{items.map((item, index) => {
-								return (
-									<tr className="item-table" key={index}>
-										<td className="single-item">{item.name}</td>
-										<td className="single-item">{item.quantity}</td>
-										<td className="single-item">{item.price}</td>
-										<td className="single-item">
-											{
-												categories.filter(
-													(category) => category._id === item.category
-												)[0].name
-											}
-										</td>
-									</tr>
-								);
-							})}
-						</tbody>
-					</table>
-				</div>
-			</>
+				</Navbar>
+				<CrudTable data={newItems} />
+			</PublicPage>
 		);
 	}
 
