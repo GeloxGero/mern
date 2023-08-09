@@ -32,6 +32,15 @@ export default function CrudUpdate() {
 	});
 
 	const handleSubmit = async (values, actions) => {
+		console.log({
+			id: data._id,
+			name: values.name,
+			price: values.price,
+			quantity: values.quantity,
+			category: values.category,
+			description: values.description,
+		});
+
 		await updateCrudItem({
 			id: data._id,
 			name: values.name,

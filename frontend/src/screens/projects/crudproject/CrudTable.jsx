@@ -75,24 +75,52 @@ const Table = styled.table`
 `;
 
 const CrudTable = ({ itemdata, categoriesdata }) => {
-	const [updateCrudItem, { isSuccess: updateSuccess }] =
-		useUpdateCrudItemMutation();
-
-	const [deleteCrudItem, { isSuccess: deleteSuccess }] =
-		useDeleteCrudItemMutation();
-
+	const [tableData, setTableData] = useState(itemdata);
 	const [modalData, setModalData] = useState(null);
 
+	const [
+		updateCrudItem,
+		{ isSuccess: updateSuccess, isLoading: updateLoading },
+	] = useUpdateCrudItemMutation();
+
+	const [
+		deleteCrudItem,
+		{ isSuccess: deleteSuccess, isLoading: deleteLoading },
+	] = useDeleteCrudItemMutation();
+
 	//modal functions
-	const handleOpenModal = (itemdata) => setModalData(itemdata);
+	const handleOpenModal = (item) => setModalData(item);
 	const handleCloseModal = () => setModalData(null);
+
+	const handleChange = (method, updatedData) => {
+		if (method === "UPDATE") {
+			setTableData(() => {
+				return itemdata.map((item) => {
+					if (item._id === updatedData.id) {
+						return { ...item, ...updatedData };
+					}
+
+					return item;
+				});
+			});
+		} else if (method === "DELETE") {
+			setTableData(() => {
+				return itemdata.filter((item) => {
+					return item._id !== updatedData._id;
+				});
+			});
+		}
+	};
 
 	return (
 		<TableContainer>
 			<TableAttachment>
 				<div></div>
-				{itemdata.map((item, index) => {
+				{tableData.map((item, index) => {
 					return <div key={index}>{item.name}</div>;
+				})}
+				{tableData.map((item) => {
+					console.log(item);
 				})}
 			</TableAttachment>
 
@@ -105,7 +133,8 @@ const CrudTable = ({ itemdata, categoriesdata }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{itemdata.map((item, index) => {
+					{tableData.map((item, index) => {
+						console.log(item);
 						return (
 							<tr key={index} onClick={() => handleOpenModal(item)}>
 								<td>{item.quantity}</td>
@@ -114,15 +143,27 @@ const CrudTable = ({ itemdata, categoriesdata }) => {
 							</tr>
 						);
 					})}
+					{console.log(itemdata)}
 				</tbody>
 			</Table>
 			<CrudTableModal
-				itemdata={modalData}
+				itemDataObject={{
+					itemdata: modalData,
+					updateItemMutation: {
+						updateCrudItem,
+						updateLoading,
+						updateSuccess,
+					},
+					deleteItemMutation: {
+						deleteCrudItem,
+						deleteLoading,
+						deleteSuccess,
+					},
+				}}
 				isOpen={modalData !== null && modalData !== undefined}
 				onClose={handleCloseModal}
 				categoriesdata={categoriesdata}
-				handleUpdate={updateCrudItem}
-				handleDelete={deleteCrudItem}
+				handleChange={handleChange}
 			/>
 		</TableContainer>
 	);

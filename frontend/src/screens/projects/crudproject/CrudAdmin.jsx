@@ -38,7 +38,6 @@ const CrudAdmin = () => {
 		useDeleteCrudItemMutation();
 
 	useEffect(() => {
-		console.log(userData);
 		if (!userData.userInfo) navigate("/projects/crud");
 	}, [userData, navigate]);
 

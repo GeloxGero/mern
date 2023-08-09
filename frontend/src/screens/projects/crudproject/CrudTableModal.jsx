@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { Form, Formik, Field } from "formik";
 import * as Yup from "yup";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 const ModalContainer = styled.div`
 	height: 100%;
@@ -107,43 +107,50 @@ const Modal = styled.div`
 `;
 
 const CrudTableModal = ({
-	itemdata,
+	itemDataObject,
 	isOpen,
 	onClose,
 	categoriesdata,
-	handleUpdate,
-	handleDelete,
+	handleChange,
 }) => {
 	if (!isOpen) return null;
 
 	const initialValues = {
-		name: itemdata.name,
-		price: itemdata.price,
-		quantity: itemdata.quantity,
-		category: itemdata.category._id,
-		description: itemdata.description,
+		name: itemDataObject.itemdata.name,
+		price: itemDataObject.itemdata.price,
+		quantity: itemDataObject.itemdata.quantity,
+		category: itemDataObject.itemdata.category._id,
+		description: itemDataObject.itemdata.description,
 	};
 
 	const validationSchema = Yup.object({
 		name: Yup.string().required("Required Name"),
 		price: Yup.number().required("Required Price"),
 		quantity: Yup.number().required("Required Quantity"),
-		category: Yup.string()
-			.required("Required Category")
-			.test("log-value", "Invalid", (value) => {
-				console.log(value);
-				return true;
-			}),
+		category: Yup.string().required("Required Category"),
 		description: Yup.string().required("Required Description"),
 	});
 
 	const handleSubmit = async (values, actions) => {
-		await updateCrudItem({
-			id: itemdata._id,
+		console.log("Here");
+
+		await itemDataObject.updateItemMutation.updateCrudItem({
+			id: itemDataObject.itemdata._id,
 			name: values.name,
 			price: values.price,
 			quantity: values.quantity,
 			category: values.category,
+			description: values.description,
+		});
+
+		handleChange("UPDATE", {
+			id: itemDataObject.itemdata._id,
+			name: values.name,
+			price: values.price,
+			quantity: values.quantity,
+			category: categoriesdata.filter((category) => {
+				return category._id === values.category;
+			}),
 			description: values.description,
 		});
 	};
@@ -158,10 +165,6 @@ const CrudTableModal = ({
 					onSubmit={handleSubmit}
 				>
 					{(props) => {
-						useEffect(() => {
-							props.setFieldTouched("category", true);
-						}, []);
-
 						return (
 							<Form>
 								<Field
@@ -201,15 +204,19 @@ const CrudTableModal = ({
 									className="form-input"
 								/>
 
-								<button type="submit">Update</button>
-								{/* <button
-									type="button"
-									onClick={() => {
-										handleDelete(data._id);
-									}}
-								>
-									Delete
-								</button> */}
+								<div className="action-buttons">
+									<button type="submit">Update</button>
+									<button
+										type="button"
+										onClick={() => {
+											itemDataObject.deleteItemMutation.deleteCrudItem(
+												itemDataObject.itemdata._id
+											);
+										}}
+									>
+										Delete
+									</button>
+								</div>
 							</Form>
 						);
 					}}
