@@ -1,4 +1,9 @@
 import styled from "styled-components";
+import { useLogoutMutation } from "../../../slices/usersApiSlice";
+import { clearCredentials } from "../../../slices/authSlice";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
 	faCircleUser,
@@ -9,7 +14,7 @@ import {
 
 const Sidebar = styled.div`
 	height: 100vh;
-	width: 5vw;
+	width: 80px;
 
 	display: flex;
 	align-items: center;
@@ -25,8 +30,8 @@ const Sidebar = styled.div`
 	box-shadow: 0 2px 20px 2px black;
 
 	.icon-container {
-		width: 5vw;
-		height: 5vw;
+		width: 80px;
+		height: 80px;
 		display: flex;
 		align-items: center;
 		justify-content: center;
@@ -63,6 +68,16 @@ const Sidebar = styled.div`
 `;
 
 const CrudSidebar = () => {
+	const navigate = useNavigate();
+	const dispatch = useDispatch();
+
+	const [logout] = useLogoutMutation();
+
+	const handleLogout = async () => {
+		await logout().unwrap();
+		dispatch(clearCredentials());
+	};
+
 	return (
 		<Sidebar>
 			<div className="icon-container">
@@ -79,7 +94,7 @@ const CrudSidebar = () => {
 				<FontAwesomeIcon icon={faGear} className="sidebar-icon" />
 				<p>Settings</p>
 			</div>
-			<div className="icon-container">
+			<div className="icon-container" onClick={handleLogout}>
 				<FontAwesomeIcon icon={faRightFromBracket} className="sidebar-icon" />
 				<p>Logout</p>
 			</div>

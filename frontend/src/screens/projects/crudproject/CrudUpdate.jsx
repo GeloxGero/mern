@@ -17,22 +17,11 @@ export default function CrudUpdate() {
 		error: categoriesError,
 	} = useGetCrudCategoriesQuery();
 
-	const [
-		updateCrudItem,
-		{
-			isLoading: updateLoading,
-			isError: updateError,
-			isSuccess: updateSuccess,
-		},
-	] = useUpdateCrudItemMutation();
+	const [updateCrudItem, { isSuccess: updateSuccess }] =
+		useUpdateCrudItemMutation();
 
-	const initialValues = {
-		name: data.name,
-		price: data.price,
-		quantity: data.quantity,
-		category: data.category,
-		description: data.description,
-	};
+	const [deleteCrudItem, { isSuccess: deleteSuccess }] =
+		useUpdateCrudItemMutation();
 
 	const validationSchema = Yup.object({
 		name: Yup.string().required("Required Name"),

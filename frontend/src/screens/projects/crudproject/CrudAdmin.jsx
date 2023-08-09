@@ -38,6 +38,7 @@ const CrudAdmin = () => {
 		useDeleteCrudItemMutation();
 
 	useEffect(() => {
+		console.log(userData);
 		if (!userData.userInfo) navigate("/projects/crud");
 	}, [userData, navigate]);
 
@@ -125,7 +126,7 @@ const CrudAdmin = () => {
 		content = (
 			<AdminContainer>
 				<CrudSidebar />
-				<CrudTable data={newItems} />
+				<CrudTable itemdata={newItems} categoriesdata={categories} />
 			</AdminContainer>
 		);
 	}

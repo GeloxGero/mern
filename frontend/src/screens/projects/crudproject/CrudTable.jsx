@@ -1,7 +1,10 @@
 import styled from "styled-components";
 import { useState } from "react";
 import CrudTableModal from "./CrudTableModal";
-
+import {
+	useUpdateCrudItemMutation,
+	useDeleteCrudItemMutation,
+} from "../../../slices/projectSlices/crudItemSlice";
 const TableContainer = styled.div`
 	padding: 0;
 	margin: 0;
@@ -54,16 +57,12 @@ const Table = styled.table`
 		color: #3f4259;
 	}
 
-	td:hover {
-		cursor: pointer;
-	}
-
-	tr:hover {
-		border-bottom: solid 1px blue;
-	}
-
 	tr:hover td {
 		background: #00341623;
+	}
+
+	tr:last-child {
+		background-color: red;
 	}
 
 	tr:nth-child(even) {
@@ -75,21 +74,24 @@ const Table = styled.table`
 	}
 `;
 
-const CrudTable = ({ data }) => {
-	const [openModal, setOpenModal] = useState(null);
+const CrudTable = ({ itemdata, categoriesdata }) => {
+	const [updateCrudItem, { isSuccess: updateSuccess }] =
+		useUpdateCrudItemMutation();
+
+	const [deleteCrudItem, { isSuccess: deleteSuccess }] =
+		useDeleteCrudItemMutation();
+
+	const [modalData, setModalData] = useState(null);
 
 	//modal functions
-	const handleOpenModal = (index) => setOpenModal(index);
-	const handleCloseModal = (index) => {
-		console.log(openModal, "Running");
-		setOpenModal(index + 1);
-	};
+	const handleOpenModal = (itemdata) => setModalData(itemdata);
+	const handleCloseModal = () => setModalData(null);
 
 	return (
 		<TableContainer>
 			<TableAttachment>
 				<div></div>
-				{data.map((item, index) => {
+				{itemdata.map((item, index) => {
 					return <div key={index}>{item.name}</div>;
 				})}
 			</TableAttachment>
@@ -103,24 +105,25 @@ const CrudTable = ({ data }) => {
 					</tr>
 				</thead>
 				<tbody>
-					{data.map((item, index) => {
+					{itemdata.map((item, index) => {
 						return (
-							<tr key={index} onClick={() => handleOpenModal(index)}>
+							<tr key={index} onClick={() => handleOpenModal(item)}>
 								<td>{item.quantity}</td>
 								<td>{item.price}</td>
 								<td>{item.category.name}</td>
-								<CrudTableModal
-									isOpen={openModal === index}
-									onClose={handleCloseModal}
-									data={item}
-								/>
 							</tr>
 						);
 					})}
-
-					{console.log(openModal)}
 				</tbody>
 			</Table>
+			<CrudTableModal
+				itemdata={modalData}
+				isOpen={modalData !== null && modalData !== undefined}
+				onClose={handleCloseModal}
+				categoriesdata={categoriesdata}
+				handleUpdate={updateCrudItem}
+				handleDelete={deleteCrudItem}
+			/>
 		</TableContainer>
 	);
 };
