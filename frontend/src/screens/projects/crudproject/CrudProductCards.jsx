@@ -1,10 +1,15 @@
 import styled from "styled-components";
 import images from "../../../assets/image-links";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import {
+	faHeart,
+	faAngleRight,
+	faAngleLeft,
+} from "@fortawesome/free-solid-svg-icons";
+import { useState } from "react";
 
 const ProductContainer = styled.div`
-	max-width: 1350px;
+	max-width: 80vw;
 	min-height: 500px;
 	border-radius: 10px;
 
@@ -13,15 +18,15 @@ const ProductContainer = styled.div`
 	padding: 20px;
 
 	flex-wrap: wrap;
-	background-color: #79829a;
+	background-color: #31344b;
 
 	margin-bottom: 50px;
 `;
 
 const ProductCard = styled.div`
-	height: 300px;
-	width: 200px;
-	margin: 20px;
+	height: 350px;
+	width: 250px;
+	margin: 30px;
 	border-radius: 10px;
 
 	position: relative;
@@ -32,8 +37,8 @@ const ProductCard = styled.div`
 
 	img {
 		top: 0;
-		height: 300px;
-		width: 200px;
+		height: 350px;
+		width: 280px;
 		object-fit: cover;
 		object-position: top;
 	}
@@ -80,10 +85,51 @@ const ProductCard = styled.div`
 	overflow: hidden;
 `;
 
+const PageNavigation = styled.div`
+	display: flex;
+	align-self: end;
+	justify-content: start;
+
+	gap: 5px;
+	width: 100%;
+
+	p {
+		padding-left: 20px;
+		font-size: 1.4em;
+		color: #000;
+	}
+
+	p:hover {
+		cursor: pointer;
+	}
+`;
+
 const CrudProductCards = ({ data }) => {
+	const [popularPage, setPopularPage] = useState(0);
+
+	const spliceArrayIntoChunks = function (array, chunkSize) {
+		const result = [];
+		for (let i = 0; i < array.length; i += chunkSize) {
+			result.push(array.slice(i, i + chunkSize));
+		}
+		return result;
+	};
+
+	const pagedItems = spliceArrayIntoChunks(data, 10);
+
+	const handlePopularPage = (input) => {
+		if (input === 1) {
+			if (popularPage + 1 === pagedItems.length) return;
+			setPopularPage(popularPage + 1);
+		} else if (input === -1) {
+			if (popularPage === 0) return;
+			setPopularPage(popularPage - 1);
+		}
+	};
+
 	return (
 		<ProductContainer>
-			{data.map((item, index) => {
+			{pagedItems[popularPage].map((item, index) => {
 				return (
 					<ProductCard key={index}>
 						<h1>{item.name}</h1>
@@ -93,6 +139,15 @@ const CrudProductCards = ({ data }) => {
 					</ProductCard>
 				);
 			})}
+
+			<PageNavigation>
+				<p onClick={() => handlePopularPage(-1)}>
+					<FontAwesomeIcon icon={faAngleLeft} />
+				</p>
+				<p onClick={() => handlePopularPage(1)}>
+					<FontAwesomeIcon icon={faAngleRight} />
+				</p>
+			</PageNavigation>
 		</ProductContainer>
 	);
 };

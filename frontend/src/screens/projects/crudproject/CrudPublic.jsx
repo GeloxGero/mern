@@ -5,6 +5,17 @@ import { useState, useEffect } from "react";
 import CrudProductCards from "./CrudProductCards";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
+import CrudSidebar from "./CrudSidebar";
+
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+	faMagnifyingGlass,
+	faCartShopping,
+	faComment,
+	faBell,
+	faUser,
+	faArrowRight,
+} from "@fortawesome/free-solid-svg-icons";
 
 const PublicPage = styled.div`
 	width: 100vw;
@@ -14,24 +25,109 @@ const PublicPage = styled.div`
 
 	display: flex;
 	align-items: center;
-	justify-content: center;
+	justify-content: start;
 	flex-direction: column;
 `;
 
-const Navbar = styled.nav`
-	display: flex;
-	align-items: end;
-	justify-content: end;
-	height: 250px;
-	max-width: 1350px;
-	margin: 0 auto;
-	padding-bottom: 8px;
+const Section = styled.div`
+	width: 80vw;
+	height: 1000px;
 
-	.navigate {
-		font-size: 2em;
-		text-decoration: none;
-		color: #acb212;
+	display: flex;
+	align-items: center;
+	justify-content: start;
+	flex-direction: column;
+	border-radius: 15px;
+
+	background: #31344b;
+
+	.highlight {
+		width: 100%;
+		height: 100px;
+		display: flex;
+		justify-content: space-between;
+		padding: 0 100px;
+		align-items: center;
+	}
+
+	.highlight .explore {
+		background: #79829a;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		border-radius: 15px;
+		padding: 10px;
+		gap: 10px;
+	}
+`;
+
+const TopContainer = styled.div`
+	height: 120px;
+	background: none;
+	width: 90vw;
+
+	align-self: end;
+
+	display: flex;
+	justify-content: end;
+	align-items: center;
+
+	div {
+		width: 200px;
+		height: 50px;
+		background: #31344b;
+		margin: 0 20px;
+		border-radius: 15px;
+	}
+
+	div:hover {
+		cursor: pointer;
+	}
+
+	.search {
+		display: flex;
+		width: 500px;
+		align-items: center;
+		justify-content: start;
+		margin-right: 400px;
+	}
+
+	.search .icon {
 		padding-left: 20px;
+		padding-right: 20px;
+	}
+
+	.cart,
+	.actions,
+	.profile {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.cart,
+	.actions {
+		width: 50px;
+		height: 50px;
+		font-size: 1.9em;
+	}
+
+	.cart {
+		margin-right: 200px;
+	}
+
+	.profile {
+		justify-content: start;
+		width: 300px;
+		height: 50px;
+		margin-right: 200px;
+		margin-left: 250px;
+	}
+
+	.profile .icon {
+		padding-left: 15px;
+		font-size: 1.9em;
+		padding-right: 40px;
 	}
 `;
 
@@ -39,7 +135,6 @@ const CrudPublic = () => {
 	const navigate = useNavigate();
 
 	const userData = useSelector((state) => state.auth);
-
 	useEffect(() => {
 		if (userData.userInfo !== null) {
 			navigate("/projects/crud/admin");
@@ -74,15 +169,37 @@ const CrudPublic = () => {
 
 		content = (
 			<PublicPage>
-				<Navbar>
-					<Link className="navigate" to="login">
-						Login
-					</Link>
-					<Link className="navigate" to="register">
-						Register
-					</Link>
-				</Navbar>
-				<CrudProductCards data={newItems} />
+				<TopContainer>
+					<div className="search">
+						<FontAwesomeIcon icon={faMagnifyingGlass} className="icon" />
+						<p>Search for Product</p>
+					</div>
+					<div className="cart">
+						<FontAwesomeIcon icon={faCartShopping} className="icon" />
+					</div>
+					<div className="actions">
+						<FontAwesomeIcon icon={faComment} className="icon" />
+					</div>
+					<div className="actions">
+						<FontAwesomeIcon icon={faBell} className="icon" />
+					</div>
+					<div className="profile">
+						<FontAwesomeIcon icon={faUser} className="icon" />
+						<h3>Current User</h3>
+					</div>
+				</TopContainer>
+				<CrudSidebar />
+
+				<Section>
+					<div className="highlight">
+						<h1>Most Popular</h1>
+						<div className="explore">
+							<h4>Explore</h4>
+							<FontAwesomeIcon icon={faArrowRight} className="icon" />
+						</div>
+					</div>
+					<CrudProductCards data={newItems} />
+				</Section>
 			</PublicPage>
 		);
 	}

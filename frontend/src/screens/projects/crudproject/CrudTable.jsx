@@ -119,9 +119,6 @@ const CrudTable = ({ itemdata, categoriesdata }) => {
 				{tableData.map((item, index) => {
 					return <div key={index}>{item.name}</div>;
 				})}
-				{tableData.map((item) => {
-					console.log(item);
-				})}
 			</TableAttachment>
 
 			<Table>
@@ -134,7 +131,6 @@ const CrudTable = ({ itemdata, categoriesdata }) => {
 				</thead>
 				<tbody>
 					{tableData.map((item, index) => {
-						console.log(item);
 						return (
 							<tr key={index} onClick={() => handleOpenModal(item)}>
 								<td>{item.quantity}</td>
@@ -143,7 +139,6 @@ const CrudTable = ({ itemdata, categoriesdata }) => {
 							</tr>
 						);
 					})}
-					{console.log(itemdata)}
 				</tbody>
 			</Table>
 			<CrudTableModal

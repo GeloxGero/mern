@@ -6,14 +6,16 @@ import { useDispatch } from "react-redux";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-	faCircleUser,
+	faCompass,
 	faStore,
 	faGear,
 	faRightFromBracket,
 } from "@fortawesome/free-solid-svg-icons";
 
 const Sidebar = styled.div`
-	height: 100vh;
+	margin-top: 1vh;
+	margin-left: 0.5vw;
+	height: 98vh;
 	width: 80px;
 
 	display: flex;
@@ -21,13 +23,14 @@ const Sidebar = styled.div`
 	justify-content: start;
 	flex-direction: column;
 
-	position: absolute;
+	position: fixed;
 	top: 0;
 	left: 0;
 
-	background: #202831;
+	background: #32344b;
 
-	box-shadow: 0 2px 20px 2px black;
+	border: black 0.5px solid;
+	border-radius: 20px;
 
 	.icon-container {
 		width: 80px;
@@ -36,6 +39,7 @@ const Sidebar = styled.div`
 		align-items: center;
 		justify-content: center;
 		flex-direction: column;
+		color: #252323;
 
 		padding-bottom: 20px;
 	}
@@ -65,6 +69,13 @@ const Sidebar = styled.div`
 		font-size: 0.79em;
 		color: #68727b;
 	}
+
+	.line {
+		padding: 50px 0;
+		height: 0px;
+		width: 80px;
+		border-bottom: solid 1px black;
+	}
 `;
 
 const CrudSidebar = () => {
@@ -81,15 +92,17 @@ const CrudSidebar = () => {
 	return (
 		<Sidebar>
 			<div className="icon-container">
-				<FontAwesomeIcon icon={faCircleUser} className="sidebar-icon" />
-				<p>Profile</p>
+				<FontAwesomeIcon icon={faCompass} className="sidebar-icon" />
+				<p>Discover</p>
 			</div>
 
-			<br />
 			<div className="icon-container">
 				<FontAwesomeIcon icon={faStore} className="sidebar-icon" />
 				<p>Store</p>
 			</div>
+
+			<div className="line"></div>
+
 			<div className="icon-container">
 				<FontAwesomeIcon icon={faGear} className="sidebar-icon" />
 				<p>Settings</p>

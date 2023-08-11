@@ -132,8 +132,6 @@ const CrudTableModal = ({
 	});
 
 	const handleSubmit = async (values, actions) => {
-		console.log("Here");
-
 		await itemDataObject.updateItemMutation.updateCrudItem({
 			id: itemDataObject.itemdata._id,
 			name: values.name,
@@ -143,16 +141,20 @@ const CrudTableModal = ({
 			description: values.description,
 		});
 
+		const selectedCategory = categoriesdata.find(
+			(category) => category._id === values.category
+		);
+
 		handleChange("UPDATE", {
 			id: itemDataObject.itemdata._id,
 			name: values.name,
 			price: values.price,
 			quantity: values.quantity,
-			category: categoriesdata.filter((category) => {
-				return category._id === values.category;
-			}),
+			category: selectedCategory,
 			description: values.description,
 		});
+
+		onClose(null);
 	};
 
 	return (

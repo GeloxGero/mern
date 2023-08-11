@@ -30,7 +30,6 @@ import {
 
 import CrudProject from "./screens/projects/crudproject/CrudProject.jsx";
 import CrudLayout from "./layouts/projects/crud/CrudLayout.jsx";
-import CrudUpdate from "./screens/projects/crudproject/CrudUpdate.jsx";
 import CrudNewItem from "./screens/projects/crudproject/CrudNewItem.jsx";
 import CrudNewCategory from "./screens/projects/crudproject/CrudNewCategory.jsx";
 import CrudDeleteCategory from "./screens/projects/crudproject/CrudDeleteCategory.jsx";
@@ -61,7 +60,6 @@ const router = createBrowserRouter(
 					<Route index element={<CrudPublic />} />
 
 					<Route path="admin" element={<CrudAdmin />} />
-					<Route path="update" element={<CrudUpdate />} />
 					<Route path="add" element={<CrudNewItem />} />
 					<Route path="addcategory" element={<CrudNewCategory />} />
 					<Route path="deletecategory" element={<CrudDeleteCategory />} />
