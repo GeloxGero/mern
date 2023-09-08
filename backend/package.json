@@ -23,6 +23,7 @@
 		"mongoose": "^7.3.4"
 	},
 	"devDependencies": {
+		"@faker-js/faker": "^8.0.2",
 		"concurrently": "^8.2.0",
 		"nodemon": "^3.0.1"
 	}
