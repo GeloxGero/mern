@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
-import CrudItem from "./projectModels/crudModels/crudModel.js";
 
 const userSchema = mongoose.Schema(
 	{

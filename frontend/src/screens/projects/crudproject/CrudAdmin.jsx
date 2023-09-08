@@ -97,12 +97,12 @@ const CrudAdmin = () => {
 		// 						Delete Category
 		// 					</button>
 		// 					<button
-		// 						onClick={async () => {
-		// 							await logout().unwrap();
-		// 							dispatch(clearCredentials());
+		// onClick={async () => {
+		// 	await logout().unwrap();
+		// 	dispatch(clearCredentials());
 
-		// 							navigate("/projects/crud");
-		// 						}}
+		// 	navigate("/projects/crud");
+		// }}
 		// 					>
 		// 						Logout
 		// 					</button>
